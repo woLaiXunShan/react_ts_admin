@@ -1,0 +1,36 @@
+#components-layout-demo-custom-trigger .trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+#components-layout-demo-custom-trigger .trigger:hover {
+  color: #1890ff;
+}
+#components-layout-demo-custom-trigger .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
+.site-layout .site-layout-background {
+  background: #fff;
+}
+.logo {
+  text-align: center;
+  color: #fff;
+  height: 64px;
+  line-height: 64px;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+.logo.small{
+  font-size: 14px;
+}
+.ant-layout{
+  height: 100%;
+}
+.menu_box{
+  height: calc(100% - 64px);
+  overflow: auto;
+}
