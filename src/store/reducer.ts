@@ -11,12 +11,14 @@ export default (state: any = initialState, action: any) => {
       sessionStorage.isLogin = state.isLogin
       return state
     case ADD_TAG:
-      let names = state.tags.map((item: { name: any }) => item.name)
-      if (!names.includes(action.value.name)) {
-        state.tags.push(action.value)
-        sessionStorage.tags = JSON.stringify(state.tags)
+      {
+        let names = state.tags.map((item: { name: any }) => item.name)
+        if (!names.includes(action.value.name)) {
+          state.tags.push(action.value)
+          sessionStorage.tags = JSON.stringify(state.tags)
+        }
+        return state
       }
-      return state
     case DELETE_TAG:
       state.tags.splice(action.value, 1)
       sessionStorage.tags = JSON.stringify(state.tags)
