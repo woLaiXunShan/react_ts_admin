@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'
-import menuList from '../../route/Index'
+import { useHistory, Link } from 'react-router-dom'
+import { RouteMap } from '../../route/Index'
 import PrivateRoute from '../../components/privateRoute/Index'
 import { Layout, Menu, Dropdown, Avatar } from 'antd';
 import './Layout.css';
@@ -8,20 +8,30 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined
 } from '@ant-design/icons';
-// import menuList from '../../menuList/menu'
+import Tags from './Tags'
 import avatar from '../../images/logo.png'
+import store from '../../store/Index'
+import { IS_LOGIN } from '../../store/actionTypes'
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
-const menu = (
-  <Menu className="tx_c">
-    <Menu.Item>个人中心</Menu.Item>
-    <Menu.Item>修改密码</Menu.Item>
-    <Menu.Item>退出登录</Menu.Item>
-  </Menu>
-)
 
 const Layout_: React.FC<any> = () => {
+  const history = useHistory()
+  const clickMenu = (param: any) => {
+    switch (param.key) {
+      case 'logout':
+        store.dispatch({type: IS_LOGIN, value: false})
+        history.push('/')
+        break;
+    }
+  }
+  const menu = (
+    <Menu onClick={clickMenu} className="tx_c">
+      <Menu.Item key="personal">个人中心</Menu.Item>
+      <Menu.Item key="logout">退出登录</Menu.Item>
+    </Menu>
+  )
   const [collapsed, setCollapsed] = useState(false)
 
   return (
@@ -30,7 +40,7 @@ const Layout_: React.FC<any> = () => {
         <div className={`logo ${collapsed ? 'small' : ''}`}>LOGO</div>
         <Menu className="menu_box scrollbar" theme="dark" mode="inline" defaultSelectedKeys={['1']}>
           {
-            menuList.map((item: any) => (
+            RouteMap.map((item: any) => (
               item.children && item.children.length > 0 ? 
               <SubMenu key={item.name} icon={item.icon} title={item.title}>
                 {
@@ -56,12 +66,13 @@ const Layout_: React.FC<any> = () => {
               <MenuUnfoldOutlined onClick={() =>setCollapsed(!collapsed)} style={{fontSize: 20}} /> :
               <MenuFoldOutlined onClick={() =>setCollapsed(!collapsed)} style={{fontSize: 20}} />
             }
-            <div className="ml30"><p>首页</p></div>
+            <div className="ml20"><p>首页</p></div>
           </div>
           <Dropdown overlay={menu} placement="bottomRight" arrow>
             <Avatar size={50} src={avatar} />
           </Dropdown>
         </Header>
+        <Tags></Tags>
         <Content
           className="bgf"
           style={{

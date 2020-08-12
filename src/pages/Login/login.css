@@ -5,4 +5,17 @@
   background-size: cover;
   background-position: center center;
   overflow: hidden;
+  position: relative;
+}
+.form_box{
+  position: absolute;
+  top: 20%;
+  right: 100px;
+  width: 500px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 100px 30px;
+}
+.ant-form-item-label > label{
+  color: #fff;
 }
