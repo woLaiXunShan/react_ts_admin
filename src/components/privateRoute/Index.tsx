@@ -3,7 +3,6 @@
  */
 import React, { Suspense, useState, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-// import * as Loadable from 'react-loadable'
 import * as NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { RouteList } from '../../route/Index'
@@ -53,9 +52,6 @@ const PrivateRoute: React.FC<any> = () => {
                 addTag(item)
                 if (!item.auth) { // 没有权限限制
                   return <Suspense fallback={<h1>loading</h1>}>
-                    {
-                      console.log({...props})
-                    }
                     <item.component {...props} />
                   </Suspense>
                 } else { // 有权限限制

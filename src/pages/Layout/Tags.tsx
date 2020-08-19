@@ -22,6 +22,9 @@ const Tags: React.FC<any> = () => {
     <div className="tags_box bgf bor_t bor_b p10">
       <div>{JSON.stringify(tags)}</div>
       {
+        console.log(tags)
+      }
+      {
         tags.length && tags.map((item: any, index: number) => (
           item.name === 'Home' ?
           <Tag color={history.location.pathname === item.path ? 'blue' : ''} key={item.name}>
