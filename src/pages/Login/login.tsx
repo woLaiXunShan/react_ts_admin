@@ -18,22 +18,22 @@ const Login: React.FC<any> = (props) => {
     wrapperCol: { offset: 6, span: 16 },
   }
   const onFinish = (values: any) => {
-    let counttime = new Date().getTime(); // 当前时间戳
-    let pwdLen = values.upsw.length / 2
-    let pwd1 = String(counttime).substring(Math.floor(pwdLen), counttime.toString().length);
-    let pwd2 = String(counttime).substring(0, Math.floor(pwdLen));
-    const params: IParams = {
-      ulogin: values.ulogin,
-      upsw: pwd1 + values.upsw + pwd2
-    }
-    login(params).then((res: any) => {
-      if (res.statusCode === 200) {
+    // let counttime = new Date().getTime(); // 当前时间戳
+    // let pwdLen = values.upsw.length / 2
+    // let pwd1 = String(counttime).substring(Math.floor(pwdLen), counttime.toString().length);
+    // let pwd2 = String(counttime).substring(0, Math.floor(pwdLen));
+    // const params: IParams = {
+    //   ulogin: values.ulogin,
+    //   upsw: pwd1 + values.upsw + pwd2
+    // }
+    // login(params).then((res: any) => {
+    //   if (res.statusCode === 200) {
         store.dispatch({type: IS_LOGIN, value: true})
         props.history.push('/')
-      } else {
-        message.error(res.message)
-      }
-    })
+    //   } else {
+    //     message.error(res.message)
+    //   }
+    // })
   }
   return (
     <div className="login">
