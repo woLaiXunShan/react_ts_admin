@@ -1,7 +1,6 @@
 import React from 'react';
 import './login.css'
 import { Form, Input, Button, message } from 'antd'
-import store from '../../store/Index'
 import { IS_LOGIN } from '../../store/actionTypes'
 import { login } from '../../fetch/api'
 import { useStore } from '../../store/context'

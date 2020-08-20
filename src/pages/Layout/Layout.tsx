@@ -25,6 +25,7 @@ const Layout_: React.FC<any> = () => {
     switch (param.key) {
       case 'logout':
         // store.dispatch({type: IS_LOGIN, value: false})
+        console.log(store)
         dispatch({type: IS_LOGIN, value: false})
         history.push('/')
         break;
