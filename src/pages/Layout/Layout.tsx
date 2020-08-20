@@ -10,18 +10,22 @@ import {
 } from '@ant-design/icons';
 import Tags from './Tags'
 import avatar from '../../images/logo.png'
-import store from '../../store/Index'
+// import store from '../../store/Index'
+// import initialState from '../../store/state'
+import { useStore } from '../../store/context'
 import { IS_LOGIN } from '../../store/actionTypes'
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
 const Layout_: React.FC<any> = () => {
+  const [dispatch] = useStore()
   const history = useHistory()
   const clickMenu = (param: any) => {
     switch (param.key) {
       case 'logout':
-        store.dispatch({type: IS_LOGIN, value: false})
+        // store.dispatch({type: IS_LOGIN, value: false})
+        dispatch({type: IS_LOGIN, value: false})
         history.push('/')
         break;
     }

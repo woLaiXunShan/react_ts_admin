@@ -1,10 +1,10 @@
 import { IS_LOGIN, ADD_TAG, DELETE_TAG } from './actionTypes'
-const initialState = {
-  isLogin: sessionStorage.isLogin ? JSON.parse(sessionStorage.isLogin) : false,
-  tags: sessionStorage.tags ? JSON.parse(sessionStorage.tags) : []
-}
+// const initialState = {
+//   isLogin: sessionStorage.isLogin ? JSON.parse(sessionStorage.isLogin) : false,
+//   tags: sessionStorage.tags ? JSON.parse(sessionStorage.tags) : []
+// }
 
-export default (state: any = initialState, action: any) => {
+export default (state: any, action: any) => {
   switch (action.type) {
     case IS_LOGIN:
       state.isLogin = action.value

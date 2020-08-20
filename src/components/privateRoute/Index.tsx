@@ -1,12 +1,12 @@
 /**
  * 通过判断登录、权限 动态生成Route
  */
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import * as NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { RouteList } from '../../route/Index'
-import store from '../../store/Index'
+import { useStore } from '../../store/context'
 import { ADD_TAG } from '../../store/actionTypes'
 import NotFound from '../../pages/error/NotFound'
 import NoPermissions from '../../pages/error/NoPermissions'
@@ -21,10 +21,11 @@ interface IRoute {
 
 const PrivateRoute: React.FC<any> = () => {
   NProgress.start()
-  const [{isLogin}] = useState(store.getState())
+  const [store, dispatch] = useStore()
+  // const [{isLogin}] = useState(store.getState())
 
   const addTag = (item: IRoute) => {
-    store.dispatch({type: ADD_TAG, value: item})
+    dispatch({type: ADD_TAG, value: item})
   }
   useEffect(() => {
     NProgress.done()
@@ -48,7 +49,7 @@ const PrivateRoute: React.FC<any> = () => {
                   }}
                 />
               }
-              if (isLogin) { // 已登录
+              if (store.isLogin) { // 已登录
                 addTag(item)
                 if (!item.auth) { // 没有权限限制
                   return <Suspense fallback={<h1>loading</h1>}>
