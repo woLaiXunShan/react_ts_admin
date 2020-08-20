@@ -19,7 +19,7 @@ const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
 
 const Layout_: React.FC<any> = () => {
-  const [dispatch] = useStore()
+  const [store, dispatch] = useStore()
   const history = useHistory()
   const clickMenu = (param: any) => {
     switch (param.key) {
