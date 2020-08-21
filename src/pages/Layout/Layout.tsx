@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { RouteMap } from '../../route/Index'
 import PrivateRoute from '../../components/privateRoute/Index'
 import { Layout, Menu, Dropdown, Avatar } from 'antd';
@@ -10,10 +10,10 @@ import {
 } from '@ant-design/icons';
 import Tags from './Tags'
 import avatar from '../../images/logo.png'
-// import store from '../../store/Index'
-// import initialState from '../../store/state'
 import { useStore } from '../../store/context'
 import { IS_LOGIN } from '../../store/actionTypes'
+import { ADD_TAG } from '../../store/actionTypes'
+// import Item from 'antd/lib/list/Item';
 
 const { Header, Sider, Content } = Layout;
 const { SubMenu } = Menu;
@@ -24,7 +24,7 @@ const Layout_: React.FC<any> = () => {
   const clickMenu = (param: any) => {
     switch (param.key) {
       case 'logout':
-        // store.dispatch({type: IS_LOGIN, value: false})
+        store.dispatch({type: IS_LOGIN, value: false})
         console.log(store)
         dispatch({type: IS_LOGIN, value: false})
         history.push('/')
@@ -38,26 +38,34 @@ const Layout_: React.FC<any> = () => {
     </Menu>
   )
   const [collapsed, setCollapsed] = useState(false)
+  
+  const toPath = (item: any) => {
+    let names = store.tags.map((item: { name: any }) => item.name)
+    if (!names.includes(item.name)) {
+      dispatch({type: ADD_TAG, value: item})
+    }
+    history.push(item.path)
+  }
 
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className={`logo ${collapsed ? 'small' : ''}`}>LOGO</div>
-        <Menu className="menu_box scrollbar" theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+        <Menu className="menu_box scrollbar" theme="dark" mode="inline" defaultSelectedKeys={[history.location.pathname]}>
           {
             RouteMap.map((item: any) => (
               item.children && item.children.length > 0 ? 
               <SubMenu key={item.name} icon={item.icon} title={item.title}>
                 {
                   item.children.map((it: any) => (
-                    <Menu.Item key={it.name}>
-                      <Link to={it.path}>{it.title}</Link>
+                    <Menu.Item key={it.name} onClick={() => toPath(it)}>
+                      {it.title}
                     </Menu.Item>
                   ))
                 }
               </SubMenu> :
-              <Menu.Item key={item.name} icon={item.icon}>
-                <Link to={item.path}>{item.title}</Link>
+              <Menu.Item key={item.name} icon={item.icon} onClick={() => toPath(item)}>
+                {item.title}
               </Menu.Item>
             ))
           }

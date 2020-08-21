@@ -7,12 +7,12 @@ import * as NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { RouteList } from '../../route/Index'
 import { useStore } from '../../store/context'
-import { ADD_TAG } from '../../store/actionTypes'
 import NotFound from '../../pages/error/NotFound'
 import NoPermissions from '../../pages/error/NoPermissions'
 
 interface IRoute {
   path: string,
+  name: string,
   redirect?: string | null,
   component: any,
   needLogin?: boolean,
@@ -21,12 +21,7 @@ interface IRoute {
 
 const PrivateRoute: React.FC<any> = () => {
   NProgress.start()
-  const [store, dispatch] = useStore()
-  // const [{isLogin}] = useState(store.getState())
-
-  const addTag = (item: IRoute) => {
-    dispatch({type: ADD_TAG, value: item})
-  }
+  const [store] = useStore()
   useEffect(() => {
     NProgress.done()
   })
@@ -50,7 +45,6 @@ const PrivateRoute: React.FC<any> = () => {
                 />
               }
               if (store.isLogin) { // 已登录
-                addTag(item)
                 if (!item.auth) { // 没有权限限制
                   return <Suspense fallback={<h1>loading</h1>}>
                     <item.component {...props} />

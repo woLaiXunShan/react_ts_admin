@@ -1,8 +1,4 @@
-import { IS_LOGIN, ADD_TAG, DELETE_TAG } from './actionTypes'
-// const initialState = {
-//   isLogin: sessionStorage.isLogin ? JSON.parse(sessionStorage.isLogin) : false,
-//   tags: sessionStorage.tags ? JSON.parse(sessionStorage.tags) : []
-// }
+import { IS_LOGIN, ADD_TAG, DELETE_TAG, CLOSE_ALL, CLOSE_OTHER } from './actionTypes'
 
 export default (state: any, action: any) => {
   switch (action.type) {
@@ -11,18 +7,21 @@ export default (state: any, action: any) => {
       sessionStorage.isLogin = state.isLogin
       return state
     case ADD_TAG:
-      {
-        let names = state.tags.map((item: { name: any }) => item.name)
-        if (!names.includes(action.value.name)) {
-          state.tags.push(action.value)
-          sessionStorage.tags = JSON.stringify(state.tags)
-        }
-        return state
-      }
+      state.tags.push(action.value)
+      sessionStorage.tags = JSON.stringify(state.tags)
+      return {...state}
     case DELETE_TAG:
       state.tags.splice(action.value, 1)
       sessionStorage.tags = JSON.stringify(state.tags)
-      return state
+      return {...state}
+    case CLOSE_ALL:
+      state.tags = [{name: "Home", path: "/", title: "首页"}]
+      sessionStorage.tags = JSON.stringify(state.tags)
+      return {...state}
+    case CLOSE_OTHER:
+      state.tags = [{name: "Home", path: "/", title: "首页"}, action.value]
+      sessionStorage.tags = JSON.stringify(state.tags)
+      return {...state}
     default:
       return state
   }
