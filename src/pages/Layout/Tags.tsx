@@ -32,8 +32,9 @@ const Tags: React.FC<any> = () => {
     </Menu>
   )
   const onCloseTag = (index: number) => { // 关闭tag
+    history.location.pathname === store.tags[index].path && 
+    (store.tags.length ? history.push(store.tags[index-1].path) : history.push('/'))
     dispatch({type: DELETE_TAG, value: index})
-    store.tags.length ? history.push(store.tags[index-1].path) : history.push('/')
   }
 
   return (
