@@ -13,7 +13,7 @@ const lazyRouter = (filename: string) => {
 }
 
 export const RouteMap = [
-  { path: '/', name: 'Home', title: '首页', icon: <MailOutlined />, component: lazyRouter('Home/Index') },
+  { path: '/', name: 'Home', title: '首页', notMenu: true, icon: <MailOutlined />, component: lazyRouter('Home/Index') },
   { name: 'Customer', title: '客户管理', icon: <CloudOutlined />,
     children: [
       { path: '/Customer', name: 'CustomerIndex', title: '客户管理', component: lazyRouter('Customer/Index')},
@@ -44,3 +44,5 @@ let neatenRouteMap = (list: any[]) => {
 neatenRouteMap(RouteMap)
 
 export const RouteList = routeList
+// 登录后默认跳转的地址
+export const loginToHome = '/'

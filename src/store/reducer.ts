@@ -1,4 +1,4 @@
-import { IS_LOGIN, ADD_TAG, DELETE_TAG, CLOSE_ALL, CLOSE_OTHER } from './actionTypes'
+import { IS_LOGIN, ADD_TAG, DELETE_TAG, CLOSE_ALL } from './actionTypes'
 
 export default (state: any, action: any) => {
   switch (action.type) {
@@ -15,11 +15,7 @@ export default (state: any, action: any) => {
       sessionStorage.tags = JSON.stringify(state.tags)
       return {...state}
     case CLOSE_ALL:
-      state.tags = [{name: "Home", path: "/", title: "首页"}]
-      sessionStorage.tags = JSON.stringify(state.tags)
-      return {...state}
-    case CLOSE_OTHER:
-      state.tags = [{name: "Home", path: "/", title: "首页"}, action.value]
+      state.tags = [...action.value]
       sessionStorage.tags = JSON.stringify(state.tags)
       return {...state}
     default:

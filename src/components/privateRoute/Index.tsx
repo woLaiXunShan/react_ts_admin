@@ -2,11 +2,12 @@
  * 通过判断登录、权限 动态生成Route
  */
 import React, { Suspense, useEffect } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import * as NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { RouteList } from '../../route/Index'
 import { useStore } from '../../store/context'
+import { ADD_TAG } from '../../store/actionTypes'
 import NotFound from '../../pages/error/NotFound'
 import NoPermissions from '../../pages/error/NoPermissions'
 
@@ -20,11 +21,19 @@ interface IRoute {
 }
 
 const PrivateRoute: React.FC<any> = () => {
+  const history = useHistory()
+  const [store, dispatch] = useStore()
+
+  useEffect(() => {
+    if (!store.tags.includes(history.location.pathname))
+    dispatch({type: ADD_TAG, value: history.location.pathname})
+  }, [history.location.pathname, store.tags, dispatch])
+
   NProgress.start()
-  const [store] = useStore()
   useEffect(() => {
     NProgress.done()
-  })
+  }, [])
+  
   return (
     <Switch>
       {

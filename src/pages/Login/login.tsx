@@ -1,16 +1,18 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom'
 import './login.css'
-import { Form, Input, Button, message } from 'antd'
+import { Form, Input, Button } from 'antd'
 import { IS_LOGIN } from '../../store/actionTypes'
-import { login } from '../../fetch/api'
 import { useStore } from '../../store/context'
+import { loginToHome } from '../../route/Index'
 
 interface IParams {
   ulogin: string,
   upsw: string
 }
-const Login: React.FC<any> = (props) => {
-  const [store, dispatch] = useStore()
+const Login: React.FC<any> = (_props: any) => {
+  const history = useHistory()
+  const [, dispatch] = useStore()
   const layout = {
     labelCol: { span: 6 },
     wrapperCol: { span: 16 },
@@ -19,22 +21,8 @@ const Login: React.FC<any> = (props) => {
     wrapperCol: { offset: 6, span: 16 },
   }
   const onFinish = (values: any) => {
-    // let counttime = new Date().getTime(); // 当前时间戳
-    // let pwdLen = values.upsw.length / 2
-    // let pwd1 = String(counttime).substring(Math.floor(pwdLen), counttime.toString().length);
-    // let pwd2 = String(counttime).substring(0, Math.floor(pwdLen));
-    // const params: IParams = {
-    //   ulogin: values.ulogin,
-    //   upsw: pwd1 + values.upsw + pwd2
-    // }
-    // login(params).then((res: any) => {
-    //   if (res.statusCode === 200) {
-        dispatch({type: IS_LOGIN, value: true})
-        props.history.push('/')
-    //   } else {
-    //     message.error(res.message)
-    //   }
-    // })
+    dispatch({type: IS_LOGIN, value: true})
+    history.push(loginToHome)
   }
   return (
     <div className="login">
